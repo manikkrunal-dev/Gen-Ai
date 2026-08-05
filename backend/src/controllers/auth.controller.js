@@ -2,6 +2,7 @@ const userModel = require('../models/user.models')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const tokenBlacklistModel = require('../models/blacklist.model')
+const { request } = require('express')
 
 
 /**
@@ -119,8 +120,28 @@ async function logoutUserController(req, res){
     })
 }
 
+/**
+ * @route getMeController
+ * @description get the current logged in user details.
+ * @access private
+ */
+
+async function getMeController(req, res){
+    const user = await userModel.findById(req.user.id)
+    
+    res.status(200).json({
+        message:"User details fetched successfully",
+        user:{
+            id: user._id,
+            email: user.email,
+            username: user.username
+        }
+    })
+}
+
 module.exports = {
     registerUserController,
     loginUserController,
-    logoutUserController
+    logoutUserController,
+    getMeController
 }
