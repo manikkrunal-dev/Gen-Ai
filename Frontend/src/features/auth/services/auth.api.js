@@ -14,7 +14,8 @@ export async function register({ username, email, password }) {
     });
     return response.data;
   } catch (err) {
-    console.log(err);
+    console.error('register failed:', err);
+    throw err;
   }
 }
 
@@ -26,7 +27,8 @@ export async function login({ email, password }) {
     });
     return response.data;
   } catch (err) {
-    console.log(err);
+    console.error('login failed:', err);
+    throw err;
   }
 }
 
@@ -35,15 +37,17 @@ export async function logout() {
     const response = await api.post('/api/auth/logout');
     return response.data;
   } catch (err) {
-    console.log(err);
+    console.error('logout failed:', err);
+    throw err;
   }
 }
 
 export async function getMe() {
   try {
-    const response = await api.post('/api/auth/get-me');
+    const response = await api.get('/api/auth/get-me');
     return response.data;
   } catch (err) {
-    console.log(err);
+    console.error('getMe failed:', err);
+    throw err;
   }
 }

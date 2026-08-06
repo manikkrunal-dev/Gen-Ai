@@ -1,20 +1,19 @@
-import React from 'react';
+import React,{ useState } from 'react';
+import { useNavigate, Link} from 'react-router';
 import '../auth.form.scss';
-import { useNavigate, Link, useNavigate } from 'react-router';
 import { useAuth } from '../hooks/useAuth';
-import { useState } from 'react';
 
 const Login = () => {
   const { loading, handleLogin } = useAuth();
-  const useNavigate = useNavigate();
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    handleLogin({ email, password });
-    useNavigate('/');
+    e.preventDefault()
+    await handleLogin({ email, password })
+    navigate("/")
   };
 
   if (loading) {
@@ -29,12 +28,12 @@ const Login = () => {
       <div className="form-container">
         <h1>Login</h1>
 
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="input-group">
             <label htmlFor="email">Email</label>
             <input
               onChange={(e) => {
-                setEmail(e.taret.value);
+                setEmail(e.target.value);
               }}
               type="email"
               id="email"
@@ -45,11 +44,10 @@ const Login = () => {
 
           <div className="input-group">
             <label htmlFor="password">Password</label>
-            <input
-              onChange={(e) => {
-                setPassword(e.taret.value);
+            <input onChange={(e) => {setPassword(e.target.value);
               }}
               type="password"
+              id="password"
               name="password"
               placeholder="Enter Password"
             />

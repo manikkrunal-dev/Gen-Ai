@@ -13,7 +13,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await handleRegister({ username, email, password });
-    navigate('/');
+    navigate("/");
   };
 
   if (loading) {
@@ -34,7 +34,7 @@ const Register = () => {
             <label htmlFor="username">Username</label>
             <input
               onChange={(e) => {
-                (setUsername, e.target.value);
+                setUsername, (e.target.value);
               }}
               type="text"
               id="username"
@@ -47,7 +47,7 @@ const Register = () => {
             <label htmlFor="email">Email</label>
             <input
               onChange={(e) => {
-                (setEmail, e.target.value);
+                setEmail, (e.target.value);
               }}
               type="email"
               id="email"
@@ -60,7 +60,7 @@ const Register = () => {
             <label htmlFor="password">Password</label>
             <input
               onChange={(e) => {
-                (setPassword, e.target.value);
+                setPassword, (e.target.value);
               }}
               type="password"
               name="password"

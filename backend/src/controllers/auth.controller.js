@@ -2,7 +2,6 @@ const userModel = require('../models/user.models');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const tokenBlacklistModel = require('../models/blacklist.model');
-const { request } = require('express');
 
 /**
  * @name registerUserController
@@ -62,7 +61,7 @@ async function registerUserController(req, res) {
 async function loginUserController(req, res) {
   const { email, password } = req.body;
 
-  const user = await userModel.findOne(email);
+  const user = await userModel.findOne({email});
 
   if (!user) {
     return res.status(400).json({
