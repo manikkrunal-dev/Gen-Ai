@@ -3,6 +3,15 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const tokenBlacklistModel = require('../models/blacklist.model');
 
+const isProd = process.env.NODE_ENV === 'production';
+
+// Cross-site cookies (Vercel frontend -> Render backend) need secure + sameSite none in production
+const cookieOptions = {
+  httpOnly: true,
+  secure: isProd,
+  sameSite: isProd ? 'none' : 'lax',
+};
+
 /**
  * @name registerUserController
  * @description register a new user, expects username, email and password in  the request body
@@ -40,7 +49,10 @@ async function registerUserController(req, res) {
     process.env.JWT_SECRET,
     { expiresIn: '1d' },
   );
-  res.cookie('token', token);
+  res.cookie('token', token, {
+    ...cookieOptions,
+    maxAge: 24 * 60 * 60 * 1000,
+  });
 
   res.status(201).json({
     message: 'User registered successfully',
@@ -61,7 +73,7 @@ async function registerUserController(req, res) {
 async function loginUserController(req, res) {
   const { email, password } = req.body;
 
-  const user = await userModel.findOne({email});
+  const user = await userModel.findOne({ email });
 
   if (!user) {
     return res.status(400).json({
@@ -82,9 +94,12 @@ async function loginUserController(req, res) {
     process.env.JWT_SECRET,
     { expiresIn: '1d' },
   );
-  res.cookie('token', token);
+  res.cookie('token', token, {
+    ...cookieOptions,
+    maxAge: 24 * 60 * 60 * 1000,
+  });
 
-  res.status(201).json({
+  res.status(200).json({
     message: 'User LoggedIn successfully',
     user: {
       id: user._id,
@@ -107,7 +122,8 @@ async function logoutUserController(req, res) {
     await tokenBlacklistModel.create({ token });
   }
 
-  res.clearCookie('token');
+  // Options must match the ones used when the cookie was set
+  res.clearCookie('token', cookieOptions);
   res.status(200).json({
     message: 'User logged out successfully',
   });
