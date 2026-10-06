@@ -13,7 +13,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await handleRegister({ username, email, password });
-    navigate("/");
+    navigate('/');
   };
 
   if (loading) {
@@ -29,46 +29,49 @@ const Register = () => {
       <div className="form-container">
         <h1>Register</h1>
 
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="input-group">
             <label htmlFor="username">Username</label>
             <input
-              onChange={(e) => {
-                setUsername, (e.target.value);
-              }}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               type="text"
               id="username"
               name="username"
               placeholder="Enter username"
+              required
             />
           </div>
 
           <div className="input-group">
             <label htmlFor="email">Email</label>
             <input
-              onChange={(e) => {
-                setEmail, (e.target.value);
-              }}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               type="email"
               id="email"
               name="email"
               placeholder="Enter email address"
+              required
             />
           </div>
 
           <div className="input-group">
             <label htmlFor="password">Password</label>
             <input
-              onChange={(e) => {
-                setPassword, (e.target.value);
-              }}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               type="password"
+              id="password"
               name="password"
               placeholder="Enter Password"
+              required
             />
           </div>
 
-          <button className="button primary-button"> Register </button>
+          <button type="submit" className="button primary-button">
+            Register
+          </button>
         </form>
 
         <p>
