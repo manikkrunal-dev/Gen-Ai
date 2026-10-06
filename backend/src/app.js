@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: ['http://localhost:5173','https://gen-ai-inky.vercel.app/login'],
+    origin: ['http://localhost:5173','https://gen-ai-inky.vercel.app/'],
     credentials: true,
   }),
 );
