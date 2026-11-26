@@ -116,7 +116,7 @@ async function generateResumePdf({ resume, selfDescription, jobDescription }) {
         contents: prompt,
         config: {
             responseMimeType: "application/json",
-            responseJsonSchema: z.toJSONSchema(interviewReportSchema),
+            responseJsonSchema: z.toJSONSchema(resumePdfSchema),
         }
     })
 
