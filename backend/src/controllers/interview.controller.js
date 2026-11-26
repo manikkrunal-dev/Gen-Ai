@@ -23,6 +23,10 @@ async function generateInterViewReportController(req, res) {
             jobDescription
         })
 
+        if (!interViewReportByAi?.technicalQuestions?.length) {
+            throw new Error("AI returned an invalid report")
+        }
+
         const interviewReport = await interviewReportModel.create({
             user: req.user.id,
             resume: resumeContent.text,
