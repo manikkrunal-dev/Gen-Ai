@@ -28,7 +28,8 @@ async function generateInterViewReportController(req, res) {
             resume: resumeContent.text,
             selfDescription,
             jobDescription,
-            ...interViewReportByAi
+            ...interViewReportByAi,
+            title: interViewReportByAi.title || jobDescription.split("\n")[0].slice(0, 100) || "Untitled Position"
         })
 
         res.status(201).json({

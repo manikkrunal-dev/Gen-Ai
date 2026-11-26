@@ -9,6 +9,7 @@ const ai = new GoogleGenAI({
 
 
 const interviewReportSchema = z.object({
+    title: z.string().describe("The job title of the position the interview report is for"),
     matchScore: z.number().describe("A score between 0 and 100 indicating how well the candidate's profile matches the job describe"),
     technicalQuestions: z.array(z.object({
         question: z.string().describe("The technical question can be asked in the interview"),
